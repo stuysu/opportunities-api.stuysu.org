@@ -1,22 +1,24 @@
 {
-  "name": "opportunity-bulletin-backend",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "@sequelize/core": "^7.0.0-alpha.10",
-    "apollo-server": "^3.6.7",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "^4.16.4",
-    "express-graphql": "^0.12.0",
-    "graphql": "^16.3.0",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.17.0"
-  }
+	"name": "today-api.stuysu.org",
+	"version": "1.0.0",
+	"description": "API for today.stuysu.org",
+	"main": "src/index.js",
+	"scripts": {
+		"dev": "nodemon --require esm src/index.js"
+	},
+	"dependencies": {
+		"apollo-server-core": "^3.5.0",
+		"apollo-server-express": "^3.5.0",
+		"esm": "^3.2.25",
+		"express": "^4.17.2",
+		"graphql": "^15.8.0",
+		"graphql-scalars": "^1.14.1",
+		"graphql-validation-complexity": "^0.4.2",
+		"mysql2": "^2.3.3",
+		"sequelize": "^6.12.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.15",
+		"sqlite3": "^5.0.2"
+	}
 }
