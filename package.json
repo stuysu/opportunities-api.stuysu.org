@@ -1,7 +1,7 @@
 {
-	"name": "today-api.stuysu.org",
+	"name": "opportunities-api.stuysu.org",
 	"version": "1.0.0",
-	"description": "API for today.stuysu.org",
+	"description": "API for opportunities-api.stuysu.org",
 	"main": "src/index.js",
 	"scripts": {
 		"dev": "nodemon --require esm src/index.js"

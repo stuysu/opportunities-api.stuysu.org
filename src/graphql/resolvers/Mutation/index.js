@@ -1,5 +1,7 @@
 import echo from "./echo";
+import editOpportunity from "./editOpportunity";
 
 export default {
-	echo
+	echo,
+	editOpportunity
 };
