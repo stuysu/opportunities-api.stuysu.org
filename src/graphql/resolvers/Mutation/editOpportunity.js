@@ -1,18 +1,21 @@
+import { ApolloError } from 'apollo-server-errors';
+
 export default async (
     _,
-    { title, description },
+    { id, title, description },
     { models: {opportunities} }
 ) => {
 
     const editingOpportunity = await opportunities.findOne({
         where: {
-            title
+            id
         }
     });
     if (!editingOpportunity) {
-        return await opportunities.create({
-            title, description
-        });
+        throw new ApolloError(
+            "There is no opportunity with that id", 
+            "OPPORTUNITY_NOT_FOUND"
+        )
     }
 
     if (title) editingOpportunity.title = title;
