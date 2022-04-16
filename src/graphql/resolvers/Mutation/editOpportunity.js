@@ -1,17 +1,16 @@
 export default async (
     _,
     { title, description },
-    { models: {opportunity} }
+    { models: {opportunities} }
 ) => {
 
-    const editingOpportunity = await opportunity.findOne({
+    const editingOpportunity = await opportunities.findOne({
         where: {
             title
         }
     });
-
     if (!editingOpportunity) {
-        return await opportunity.create({
+        return await opportunities.create({
             title, description
         });
     }
