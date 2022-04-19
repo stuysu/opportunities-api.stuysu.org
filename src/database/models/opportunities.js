@@ -11,11 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      opportunities.belongsToMany(models.categories, {
+        through: models.oppCategories
+      });
+      opportunities.belongsToMany(models.tags, {
+        through: models.oppTags
+      });
+      opportunities.belongsToMany(models.eligibilities, {
+        through: models.oppEligibilities
+      });
     }
   };
   opportunities.init({
     title: DataTypes.STRING,
-    description: DataTypes.STRING
+    description: DataTypes.TEXT,
+    date: DataTypes.STRING,
+    location: DataTypes.STRING,
+    cost: DataTypes.INTEGER,
+    appDeadline: DataTypes.DATE,
+    link: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'opportunities',
