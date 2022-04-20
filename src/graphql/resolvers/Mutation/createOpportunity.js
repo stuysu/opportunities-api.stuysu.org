@@ -1,11 +1,25 @@
 export default async (
     _,
-    { title, description },
+    { 
+        title, 
+        description,
+        date,
+        location,
+        cost,
+        appDeadline,
+        link
+    },
     { models: {opportunities} }
 ) => {
 
     return await opportunities.create({
-        title, description
+        title, 
+        description,
+        date,
+        location,
+        cost,
+        appDeadline,
+        link
     });
 
 }
