@@ -39,11 +39,6 @@ export default async (
         }
     });
     categories = getCategories.map(category => category.id);
-    if (!categories.length) {
-        throw new UserInputError('You must provide at least one category.', {
-            invalidArgs: ['categories']
-        });
-    }
 
     const opp = await opportunities.create({
         title, 
