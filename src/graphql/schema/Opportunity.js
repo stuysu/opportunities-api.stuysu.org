@@ -6,10 +6,10 @@ export default gql`
 		title: String!
 		description: String!
 		categories: [Category]
-		date: String!
-		location: String!
-		cost: Int!
-		appDeadline: Date!
-		link: String!
+		date: String
+		location: String
+		cost: Int
+		appDeadline: Date
+		link: String
 	}
 `;

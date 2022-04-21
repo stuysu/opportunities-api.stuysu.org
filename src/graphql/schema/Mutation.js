@@ -17,12 +17,12 @@ export default gql`
 		createOpportunity(
 			title: String!, 
 			description: String!,
-			categories: [Int!]!,
-			date: String!,
-			location: String!,
-			cost: Int!,
-			appDeadline: Date!,
-			link: String!
+			categories: [Int!],
+			date: String,
+			location: String,
+			cost: Int,
+			appDeadline: Date,
+			link: String
 		): Opportunity!
 		deleteOpportunity(id: Int!): Boolean!
 	}
