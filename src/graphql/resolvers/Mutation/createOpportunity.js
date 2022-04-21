@@ -3,7 +3,7 @@ import { ForbiddenError, UserInputError } from "apollo-server-core";
 export default async (
     _,
     { 
-        title: Title, 
+        title, 
         description,
         categories,
         date,
@@ -23,7 +23,7 @@ export default async (
 
     const numExistingOpp = await opportunities.count({
         where: {
-            title: Title
+            title: title
         }
     });
     if (numExistingOpp > 0) {
