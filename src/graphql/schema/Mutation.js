@@ -7,6 +7,7 @@ export default gql`
 			id: Int!, 
 			title: String, 
 			description: String,
+			categories: [Int],
 			date: String,
 			location: String,
 			cost: Int,
@@ -16,6 +17,7 @@ export default gql`
 		createOpportunity(
 			title: String!, 
 			description: String!,
+			categories: [Int!]!,
 			date: String!,
 			location: String!,
 			cost: Int!,
