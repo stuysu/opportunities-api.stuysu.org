@@ -7,7 +7,6 @@ export default async (
         models: { 
             opportunities,
             oppCategories,
-            categories
         } 
     }
 ) => {
