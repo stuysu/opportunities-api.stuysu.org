@@ -4,6 +4,6 @@ export default gql`
 	type Query {
 		ping: String!,
 		opportunityById(id: Int!): Opportunity
-		opportunities(category: Int): [Opportunity]
+		opportunities(categories: [Int]): [Opportunity]
 	}
 `;

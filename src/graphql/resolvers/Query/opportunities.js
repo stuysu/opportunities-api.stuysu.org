@@ -1,5 +1,5 @@
 export default async (root, args, context) => {
-    let { category } = args;
+    let { categories } = args;
     const { models } = context;
 
     const filterParams = {
@@ -13,10 +13,10 @@ export default async (root, args, context) => {
         model: models.categories
     }
 
-    if (category) {
+    if (categories) {
         categoryInclude.required = true;
         categoryInclude.where = {
-            id: category
+            id: categories
         };
     }
     filterParams.include.push(categoryInclude);
