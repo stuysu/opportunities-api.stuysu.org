@@ -9,5 +9,6 @@ export default gql`
 			eligibilities: [Int]
 		): [Opportunity]
 		categories: [Category]
+		eligibilities: [Eligibility]
 	}
 `;
