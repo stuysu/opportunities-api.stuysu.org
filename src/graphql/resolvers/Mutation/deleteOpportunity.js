@@ -7,15 +7,21 @@ export default async (
         models: { 
             opportunities,
             oppCategories,
+            oppEligibilities
         } 
     }
 ) => {
-    // Delete all oppCategory associated with the id to clean up table
+    // Delete all intermediate data associated with the id to clean up tables
     await oppCategories.destroy({
         where: {
             opportunityId: id
         }
-    })
+    });
+    await oppEligibilities.destroy({
+        where: {
+            opportunityId: id
+        }
+    });
 	
 	const deletingOpportunity = await opportunities.findOne({
         where: { 

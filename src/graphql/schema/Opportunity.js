@@ -6,6 +6,7 @@ export default gql`
 		title: String!
 		description: String!
 		categories: [Category]
+		eligibilities: [Eligibility]
 		date: String
 		location: String
 		cost: Int

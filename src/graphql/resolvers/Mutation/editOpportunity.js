@@ -7,6 +7,7 @@ export default async (
         title, 
         description,
         categories,
+        eligibilities,
         date,
         location,
         cost,
@@ -17,7 +18,9 @@ export default async (
         models: {
             opportunities,
             oppCategories,
-            categories: Categories
+            oppEligibilities,
+            categories: Categories,
+            eligibilities: Eligibilities
         } 
     }
 ) => {
@@ -61,6 +64,29 @@ export default async (
             await oppCategories.create({
                 opportunityId: id,
                 categoryId: categories[i]
+            });
+        }
+    }
+
+    if (eligibilities) {
+        // Delete existing eligiblities
+        await oppEligibilitis.destroy({
+            where: {
+                opportunityId: id
+            }
+        });
+
+        // Create eligibilities for the opportunity
+        const getEligibilities = await Eligibilities.findAll({
+            where: {
+                id: eligibilities
+            }
+        });
+        eligibilities = getEligibilities.map(Eligibility => Eligibility.id);
+        for (let i = 0; i < eligibilities.length; i++) {
+            await oppEligibilities.create({
+                opportunityId: id,
+                eligibilityId: eligibilities[i]
             });
         }
     }
