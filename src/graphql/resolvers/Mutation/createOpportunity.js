@@ -35,21 +35,6 @@ export default async (
         );
     }
 
-    // Create categories for the opportunity
-    const getCategories = await Categories.findAll({
-        where: {
-            id: categories
-        }
-    });
-    categories = getCategories.map(category => category.id);
-
-    const getEligibilities = await Eligibilities.findAll({
-        where: {
-            id: eligibilities
-        }
-    });
-    eligibilities = getEligibilities.map(eligibility => eligibility.id);
-
     const opp = await opportunities.create({
         title, 
         description,
@@ -60,17 +45,35 @@ export default async (
         link
     });
 
-    for (let i = 0; i < categories.length; i++) {
-        await oppCategories.create({
-            opportunityId: opp.id,
-            categoryId: categories[i]
+    // Create categories for the opportunity
+    if (Array.isArray(categories) && categories.length > 0) {
+        const getCategories = await Categories.findAll({
+            where: {
+                id: categories
+            }
         });
+        categories = getCategories.map(category => category.id);
+        for (let i = 0; i < categories.length; i++) {
+            await oppCategories.create({
+                opportunityId: opp.id,
+                categoryId: categories[i]
+            });
+        }
     }
-    for (let i = 0; i < eligibilities.length; i++) {
-        await oppEligibilities.create({
-            opportunityId: opp.id,
-            eligibilityId: eligibilities[i]
+    // Create eligibilities for the opportunity
+    if (Array.isArray(eligibilities) && eligibilities.length > 0) {
+        const getEligibilities = await Eligibilities.findAll({
+            where: {
+                id: eligibilities
+            }
         });
+        eligibilities = getEligibilities.map(eligibility => eligibility.id);
+        for (let i = 0; i < eligibilities.length; i++) {
+            await oppEligibilities.create({
+                opportunityId: opp.id,
+                eligibilityId: eligibilities[i]
+            });
+        }
     }
 
     return opp;

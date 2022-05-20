@@ -70,7 +70,7 @@ export default async (
 
     if (eligibilities) {
         // Delete existing eligiblities
-        await oppEligibilitis.destroy({
+        await oppEligibilities.destroy({
             where: {
                 opportunityId: id
             }

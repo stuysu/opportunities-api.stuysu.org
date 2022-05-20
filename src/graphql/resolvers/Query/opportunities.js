@@ -17,7 +17,7 @@ export default async (root, args, context) => {
     const categoryInclude = {
         model: models.categories
     }
-    if (categories) {
+    if (Array.isArray(categories) && categories.length > 0) {
         categoryInclude.required = true;
         categoryInclude.where = {
             id: categories
@@ -29,7 +29,7 @@ export default async (root, args, context) => {
     const eligibilityInclude = {
         model: models.eligibilities
     }
-    if (eligibilities) {
+    if (Array.isArray(eligibilities) && eligibilities.length > 0) {
         eligibilityInclude.required = true;
         eligibilityInclude.where = {
             id: eligibilities
