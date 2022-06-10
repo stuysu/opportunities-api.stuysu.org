@@ -9,6 +9,6 @@ export const SEQUELIZE_URL =
 
 export const NODE_ENV = process.env.NODE_ENV || 'development';
 
-export const GOOGLE_AUTH_CLIENT_ID = "99748524072-9e56if7d6mkkkmusajq74nlm4ietfecp.apps.googleusercontent.com"
+export const GOOGLE_AUTH_CLIENT_ID = "1050067653053-vucndte6832mr9alr7njifidrbgnmrio.apps.googleusercontent.com";
 
-export const SESSION_SECRET = process.env.SESSION_SECRET || "howdy"
+export const SESSION_SECRET = process.env.SESSION_SECRET || "howdy";
