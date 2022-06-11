@@ -27,5 +27,6 @@ export default gql`
 			link: String
 		): Opportunity!
 		deleteOpportunity(id: Int!): Boolean!
+		loginWithGoogle(googleOAuthToken: String!): String!
 	}
 `;

@@ -22,7 +22,11 @@ const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
 	context: async ({ req, res }) => {
-		return {models};
+		const setCookie = (...a) => res.cookie(...a);
+		return {
+			models,
+			setCookie,
+		};
 	},
 	uploads: false,
 	introspection: true,
