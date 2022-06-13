@@ -4,7 +4,9 @@ import validateGoogleIDToken from "../../../utils/validateGoogleIDToken";
 
 import {sign} from 'jsonwebtoken';
 
-import {PRIVATE_KEY } from "../../../constants";
+import {PRIVATE_KEY, WHITELISTED_EMAIL_DOMAINS} from "../../../constants";
+
+const {users, oAuthIds} = require("../../../database");
 
 const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
 	const payload = await validateGoogleIDToken(googleOAuthToken);
@@ -17,10 +19,51 @@ const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
 		throw new AuthenticationError("Email address with the Google ID token is not verified.");
 	}
 	
-	const id = "test";
-	const firstName = payload.given_name;
-	const lastName = payload.family_name;
-	const email = payload.email;
+	const oAuthId = await oAuthIds.findOne({
+		where: {
+			platformId: payload.sub,
+			platform: "google"
+		},
+		include: users
+	});
+	
+	let user = oAuthId ? oAuthId.user : null;
+	
+	if(!user){
+		user = await users.findOne({
+			where: {
+				email: payload.email
+			},
+		});
+		if(user){ // update oauthids
+			await oAuthIds.create({
+				userId: user.id,
+				platform: "google",
+				platformId: payload.sub,
+				platformEmail: payload.email
+			});
+		}
+	}
+	
+	if(!user){
+		const isInSchool = WHITELISTED_EMAIL_DOMAINS.includes(payload.hd);
+		if(!isInSchool){
+			throw new AuthenticationError("Email not associated with an account");
+		}
+		// if is in school, make new account
+		user = await users.create({
+			firstName: payload.given_name,
+			lastName: payload.family_name,
+			email: payload.email,
+			isFaculty: false,
+			active: true
+		});
+	}
+	
+	const id = user.id;
+	const firstName = user.firstName;
+	const lastName = user.lastName;
+	const email = user.email;
 	
 	const token = await sign(
 		{

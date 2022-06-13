@@ -18,3 +18,5 @@ export const SESSION_SECRET = process.env.SESSION_SECRET || "howdy";
 export const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 export const PUBLIC_KEY = process.env.PUBLIC_KEY;
+
+export const WHITELISTED_EMAIL_DOMAINS = ["stuy.edu", "stuysu.org"]; // users with these email endings can create an account automatically
