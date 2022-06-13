@@ -1,5 +1,9 @@
 import {createComplexityLimitRule} from "graphql-validation-complexity"
 
+import {verify} from 'jsonwebtoken';
+
+import {PUBLIC_KEY} from '../constants';
+
 import {
 	ApolloServer,
 	ApolloError,
@@ -22,8 +26,43 @@ const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
 	context: async ({ req, res }) => {
+		
+		let user, signedIn;
+		
+		let jwt = req.cookies['auth-jwt'] || req.headers['x-access-token'] || req.headers['authorization'];
+		
+		if(jwt && jwt.startsWidth('Bearer ')){
+			jwt = jwt.replace('Bearer ', '');
+		}
+		
+		if(jwt){
+			try{
+				const data = await verify(jwt, PUBLIC_KEY);
+				if(data){
+					user = await models.users.findOne({
+						where: {
+							id: data.user.id
+						},
+					});
+					signedIn = Boolean(user);
+				}
+			} catch (e){
+			}
+		}
+		
+		function authenticationRequired() {
+			if (!signedIn) {
+				throw new ForbiddenError(
+					'You must be signed in to perform that query'
+				);
+			}
+		}
+		
 		const setCookie = (...a) => res.cookie(...a);
 		return {
+			signedIn,
+			user,
+			authenticationRequired,
 			models,
 			setCookie,
 		};
