@@ -28,5 +28,6 @@ export default gql`
 		): Opportunity!
 		deleteOpportunity(id: Int!): Boolean!
 		loginWithGoogle(googleOAuthToken: String!): String!
+		logout: Boolean
 	}
 `;
