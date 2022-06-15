@@ -35,14 +35,14 @@ const apolloServer = new ApolloServer({
 			//console.log("has cookies");
 			jwt = req.cookies['auth-jwt'];
 		}
-
+		
 		if(!jwt && req.headers){
 			jwt = req.headers['x-access-token'] || req.headers['authorization'];
 		}
 
 		//console.log(jwt);
 
-		if(jwt && jwt.startsWidth('Bearer ')){
+		if(jwt && jwt.startsWith('Bearer ')){
 			jwt = jwt.replace('Bearer ', '');
 		}
 		
