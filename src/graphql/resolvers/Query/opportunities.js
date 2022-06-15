@@ -1,4 +1,7 @@
 export default async (root, args, context) => {
+	
+	context.authenticationRequired();
+
     let { categories, eligibilities } = args;
     const { models } = context;
     const { Op } = models.Sequelize;
