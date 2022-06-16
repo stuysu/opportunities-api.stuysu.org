@@ -16,6 +16,6 @@
 	"RUN npm install -g --production && npm list && npm cache clean --force && npm run build --if-present",
 	"ENV PORT 3001",
 	"EXPOSE 3001",
-	"CMD [ \"npm\", \"start\" ]",
+	"CMD [ \"npm\", \"start\" ]"
   ]
 }
