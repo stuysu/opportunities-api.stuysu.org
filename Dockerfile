@@ -1,0 +1,16 @@
+FROM library/node:16-alpine
+RUN apk update && apk upgrade && apk add --no-cache git
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY ./ /usr/src/app
+ARG BUILD_DATABASE_URL
+ARG BUILD_PUBLIC_KEY
+ARG BUILD_PRIVATE_KEY
+ENV SEQUELIZE_URL=$BUILD_DATABASE_URL
+ENV PUBLIC_KEY=$BUILD_PUBLIC_KEY
+ENV PRIVATE_KEY=$BUILD_PRIVATE_KEY
+ENV NODE_ENV production
+RUN npm install -g --production && npm list && npm cache clean --force && npm run build --if-present
+ENV PORT 80
+EXPOSE 80
+CMD [ "npm", "start" ]
