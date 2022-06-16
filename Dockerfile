@@ -10,7 +10,7 @@ ENV SEQUELIZE_URL=$BUILD_DATABASE_URL
 ENV PUBLIC_KEY=$BUILD_PUBLIC_KEY
 ENV PRIVATE_KEY=$BUILD_PRIVATE_KEY
 ENV NODE_ENV production
-RUN npm install -g --production && npm list && npm cache clean --force && npm run build --if-present
+RUN npm install --production && npm list && npm cache clean --force && npm run build --if-present
 ENV PORT 3001
 EXPOSE 3001
 CMD [ "npm", "start" ]
