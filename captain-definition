@@ -1,7 +1,7 @@
-{",
-  "schemaVersion": 2,",
-  "dockerfileLines": [",
-    "FROM library/node:16-alpine",",
+{
+  "schemaVersion": 2,
+  "dockerfileLines": [
+    "FROM library/node:16-alpine",
 	"RUN apk update && apk upgrade && apk add --no-cache git",
 	"RUN mkdir -p /usr/src/app",
 	"WORKDIR /usr/src/app",
@@ -16,6 +16,6 @@
 	"RUN npm install -g --production && npm list && npm cache clean --force && npm run build --if-present",
 	"ENV PORT 3001",
 	"EXPOSE 3001",
-	"CMD [ "npm", "start" ]",
-  ]",
-}",
+	"CMD [ \"npm\", \"start\" ]",
+  ]
+}
