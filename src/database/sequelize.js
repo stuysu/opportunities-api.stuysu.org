@@ -1,8 +1,4 @@
-import {SEQUELIZE_URL} from "../constants";
-
-//SEQUELIZE_URL = "sqlite:/Users/mrfra/Documents/su/opportunities-api.stuysu.org/src/app.db";
-
-console.log("Database: " + SEQUELIZE_URL);
+import { SEQUELIZE_URL } from '../constants';
 
 const logger =
 	process.env.SEQUELIZE_LOG === 'advanced'
