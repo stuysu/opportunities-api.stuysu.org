@@ -11,7 +11,7 @@ export const SEQUELIZE_URL =
 
 export const NODE_ENV = process.env.NODE_ENV || 'development';
 
-export const GOOGLE_LOGIN_CLIENT_ID = "1050067653053-vucndte6832mr9alr7njifidrbgnmrio.apps.googleusercontent.com";
+export const GOOGLE_LOGIN_CLIENT_ID = "979775004862-gg66eb6tialnpivrvsjmq7j7hcosths7.apps.googleusercontent.com";
 
 export const SESSION_SECRET = process.env.SESSION_SECRET || "howdy";
 
