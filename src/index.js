@@ -7,7 +7,7 @@ const app = express();
 
 
 const allowedOrigins =
-	/^https?:\/\/(?:localhost|opportunities(?:-api)?\.stuysu\.org)|opportunitiesstuysu\.netlify\.(?:com|app)$/;
+	/^https?:\/\/(?:localhost|opportunities(?:-api)?\.stuysu\.org)|opportunities(stuysu)?\.netlify\.(?:com|app)$/;
 app.use(
 	cors({
 		origin: (origin, callback) => {
