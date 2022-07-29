@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "node --require esm src/index.js",
 		"dev": "nodemon --require esm src/index.js",
-		"migrate": "node --require esm node_modules/.bin/sequelize-cli db:migrate",
+		"migrate": "node --require esm node_modules/sequelize-cli/lib/sequelize db:migrate",
 		"seedSchedules": "node --require esm src/defaultSchedules.js",
 		"build": "npm run migrate"
 	},
@@ -14,16 +14,18 @@
 		"apollo-server-core": "^3.5.0",
 		"apollo-server-express": "^3.5.0",
 		"connect-session-sequelize": "^7.1.2",
+		"dotenv": "^16.0.1",
 		"esm": "^3.2.25",
 		"express": "^4.17.2",
 		"express-session": "^1.17.2",
-		"google-auth-library": "^7.11.0",
+		"google-auth-library": "^7.14.1",
 		"graphql": "^15.8.0",
 		"graphql-scalars": "^1.14.1",
 		"graphql-validation-complexity": "^0.4.2",
+		"jsonwebtoken": "^8.5.1",
 		"mysql2": "^2.3.3",
 		"sequelize": "^6.12.0",
-		"sequelize-cli": "6.3.0"
+		"sequelize-cli": "^6.3.0"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.15",

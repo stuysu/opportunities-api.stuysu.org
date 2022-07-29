@@ -4,6 +4,7 @@ import Mutation from "./Mutation";
 import Opportunity from "./Opportunity";
 import Category from "./Category";
 import Eligibility from "./Eligibility";
+import User from "./User";
 
 export default [
 	...graphqlScalarDefs,
@@ -11,5 +12,6 @@ export default [
 	Mutation,
 	Opportunity,
 	Category,
-	Eligibility
+	Eligibility,
+	User
 ];

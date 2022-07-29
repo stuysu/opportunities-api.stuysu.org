@@ -1,5 +1,9 @@
 import {createComplexityLimitRule} from "graphql-validation-complexity"
 
+import {verify} from 'jsonwebtoken';
+
+import {PUBLIC_KEY} from '../constants';
+
 import {
 	ApolloServer,
 	ApolloError,
@@ -22,7 +26,63 @@ const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
 	context: async ({ req, res }) => {
-		return {models};
+		
+		let user, signedIn;
+		
+		let jwt;
+
+		if(req.cookies){
+			//console.log("has cookies");
+			jwt = req.cookies['auth-jwt'];
+		}
+		
+		if(!jwt && req.headers){
+			jwt = req.headers['x-access-token'] || req.headers['authorization'];
+		}
+
+		//console.log(jwt);
+
+		if(jwt && jwt.startsWith('Bearer ')){
+			jwt = jwt.replace('Bearer ', '');
+		}
+		
+		if(jwt){
+			try{
+				const data = await verify(jwt, PUBLIC_KEY);
+				if(data){
+					user = await models.users.findOne({
+						where: {
+							id: data.user.id
+						},
+					});
+					signedIn = Boolean(user);
+				}
+			} catch (e){
+			}
+		}
+		
+		function authenticationRequired() {
+			if (!signedIn) {
+				throw new ForbiddenError(
+					'You must be signed in to perform that query'
+				);
+			}
+		}
+		
+		/*
+		if(user){
+			console.log("User " + user.email + " made query");
+		}
+		*/
+		
+		const setCookie = (...a) => res.cookie(...a);
+		return {
+			signedIn,
+			user,
+			authenticationRequired,
+			models,
+			setCookie,
+		};
 	},
 	uploads: false,
 	introspection: true,

@@ -1,8 +1,10 @@
 export default async (
     _,
     { id },
-    { models: { opportunities } }
+    { models: { opportunities }, authenticationRequired }
 ) => {
+
+	authenticationRequired();
 
     return await opportunities.findOne({
         where: {
