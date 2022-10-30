@@ -1,4 +1,7 @@
 export default async (root, args, context) => {
+	
+	context.authenticationRequired();
+
     let { categories, eligibilities } = args;
     const { models } = context;
     const { Op } = models.Sequelize;
@@ -36,6 +39,6 @@ export default async (root, args, context) => {
         };
     }
     filterParams.include.push(eligibilityInclude);
-    console.log(filterParams);
+    //console.log(filterParams);
     return await models.opportunities.findAll(filterParams);
 }

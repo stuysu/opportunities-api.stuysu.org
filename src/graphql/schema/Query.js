@@ -10,5 +10,6 @@ export default gql`
 		): [Opportunity]
 		categories: [Category]
 		eligibilities: [Eligibility]
+		authenticatedUser: User
 	}
 `;
