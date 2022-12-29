@@ -68,18 +68,22 @@ const apolloServer = new ApolloServer({
 				);
 			}
 		}
-		
-		/*
-		if(user){
-			console.log("User " + user.email + " made query");
+
+		function facultyRequired() {
+			authenticationRequired();
+			if (!user.isFaculty) {
+				throw new ForbiddenError(
+					"You don't have the necessary permissions to perform that query"
+				)
+			}
 		}
-		*/
 		
 		const setCookie = (...a) => res.cookie(...a);
 		return {
 			signedIn,
 			user,
 			authenticationRequired,
+			facultyRequired,
 			models,
 			setCookie,
 		};

@@ -21,9 +21,11 @@ export default async (
             oppEligibilities,
             categories: Categories,
             eligibilities: Eligibilities
-        } 
+        },
+        facultyRequired
     }
 ) => {
+    facultyRequired();
 
     const editingOpportunity = await opportunities.findOne({
         where: {
