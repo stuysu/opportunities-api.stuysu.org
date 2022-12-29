@@ -96,9 +96,9 @@ const apolloServer = new ApolloServer({
 	validationRules: [ComplexityLimitRule],
 	formatError: err => {
 		const safeError =
-			err.originalError instanceof ApolloError ||
+			err instanceof ApolloError ||
 			err instanceof ValidationError ||
-			(err.originalError && err.originalError.message === "Not allowed by CORS");
+			(err && err.message === "Not allowed by CORS");
 
 		const internalError = err && err.extensions && err.extensions.code && err.extensions.code === "INTERNAL_SERVER_ERROR";
 
