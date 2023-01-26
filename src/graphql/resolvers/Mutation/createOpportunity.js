@@ -20,10 +20,11 @@ export default async (
             eligibilities: Eligibilities,
             oppCategories,
             oppEligibilities
-        } 
+        },
+        facultyRequired
     }
 ) => {
-
+    facultyRequired();
     const numExistingOpp = await opportunities.count({
         where: {
             title: title

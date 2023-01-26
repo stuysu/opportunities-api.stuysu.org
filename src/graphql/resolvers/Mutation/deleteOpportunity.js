@@ -8,9 +8,11 @@ export default async (
             opportunities,
             oppCategories,
             oppEligibilities
-        } 
+        },
+        facultyRequired
     }
 ) => {
+    facultyRequired();
     // Delete all intermediate data associated with the id to clean up tables
     await oppCategories.destroy({
         where: {
