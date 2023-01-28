@@ -17,7 +17,7 @@ For local development: run SQLite DB migrations
 npm run migrate
 ```
 
-Generate an RS512 key pair for use in verifying JWTs.
+Generate an ES512 key pair for use in verifying JWTs.
 ```shell
 openssl ecparam -genkey -name secp521r1 -noout -out ecdsa-p521-private.pem
 openssl ec -in ecdsa-p521-private.pem -pubout -out ecdsa-p521-public.pem

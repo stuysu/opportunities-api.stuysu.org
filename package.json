@@ -13,23 +13,23 @@
 	"dependencies": {
 		"apollo-server-core": "^3.5.0",
 		"apollo-server-express": "^3.5.0",
-		"connect-session-sequelize": "^7.1.2",
-		"dotenv": "^16.0.1",
+		"connect-session-sequelize": "^7.1.5",
+		"dotenv": "^16.0.3",
 		"esm": "^3.2.25",
-		"express": "^4.17.2",
-		"express-session": "^1.17.2",
-		"google-auth-library": "^7.14.1",
-		"graphql": "^15.8.0",
-		"graphql-scalars": "^1.14.1",
+		"express": "^4.18.2",
+		"express-session": "^1.17.3",
+		"google-auth-library": "^8.7.0",
+		"graphql": "^16.6.0",
+		"graphql-scalars": "^1.20.1",
 		"graphql-validation-complexity": "^0.4.2",
-		"jsonwebtoken": "^8.5.1",
-		"mysql2": "^2.3.3",
-		"sequelize": "^6.12.0",
-		"sequelize-cli": "^6.3.0"
+		"jsonwebtoken": "^9.0.0",
+		"mysql2": "^3.0.1",
+		"sequelize": "^6.28.0",
+		"sequelize-cli": "^6.6.0"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.15",
-		"sqlite3": "^5.0.2"
+		"nodemon": "^2.0.20",
+		"sqlite3": "^5.1.4"
 	},
 	"prettier": {
 		"useTabs": true,

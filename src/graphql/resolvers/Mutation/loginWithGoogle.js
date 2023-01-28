@@ -75,7 +75,7 @@ const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
 			}
 		},
 		{ key: PRIVATE_KEY },
-		{ algorithm: "RS512", expiresIn: "30d"}
+		{ algorithm: "ES512", expiresIn: "30d"}
 	);
 	
 	//console.log(verify(token, PUBLIC_KEY, {algorithms: ["RS512"]}));
