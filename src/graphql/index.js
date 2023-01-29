@@ -5,19 +5,27 @@ import resolvers from "./resolvers";
 import { ApolloServerErrorCode } from "@apollo/server/errors";
 import { GraphQLError } from "graphql/error";
 
-// Apollo Server v3-style error class back-compat
-export const ApolloError = (err, code) => {
-	return new GraphQLError(err, {extensions: { code }})
+// Apollo Server v3-style error classes for back-compat
+export class ApolloError extends GraphQLError {
+	constructor(err, code) {
+		super(err, {extensions: { code }});
+	}
 }
-export const AuthenticationError = (err) => {
-	return new GraphQLError(err, {extensions: {code: 'UNAUTHENTICATED'}})
-};
-export const ForbiddenError = (err) => {
-	return new GraphQLError(err, {extensions: {code: 'FORBIDDEN'}})
-};
-export const UserInputError = (err) => {
-	return new GraphQLError(err, {extensions: {code: ApolloServerErrorCode.BAD_USER_INPUT}})
-};
+export class AuthenticationError extends ApolloError {
+	constructor(err) {
+		super(err, 'UNAUTHENTICATED');
+	}
+}
+export class ForbiddenError extends ApolloError {
+	constructor(err) {
+		super(err, 'FORBIDDEN');
+	}
+}
+export class UserInputError extends ApolloError {
+	constructor(err) {
+		super(err, ApolloServerErrorCode.BAD_USER_INPUT);
+	}
+}
 
 const ComplexityLimitRule = createComplexityLimitRule(75000, {
 	scalarCost: 1,
