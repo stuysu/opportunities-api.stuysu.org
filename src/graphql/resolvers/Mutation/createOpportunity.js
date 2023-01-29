@@ -1,4 +1,5 @@
-import { ForbiddenError, UserInputError } from "apollo-server-core";
+import { ForbiddenError } from "../../index";
+
 
 export default async (
     _,

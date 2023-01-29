@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-server-errors';
+import { ApolloError } from "../../index";
 
 export default async (
     _,
@@ -71,7 +71,7 @@ export default async (
     }
 
     if (eligibilities) {
-        // Delete existing eligiblities
+        // Delete existing eligibilities
         await oppEligibilities.destroy({
             where: {
                 opportunityId: id

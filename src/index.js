@@ -1,14 +1,20 @@
 import express from "express";
 import cors from 'cors';
 
-import apolloServer from "./graphql";
+import { apolloServer, ForbiddenError } from "./graphql";
+import { expressMiddleware } from '@apollo/server/express4';
+import { verify } from "jsonwebtoken";
+import { NODE_ENV, PUBLIC_KEY } from "./constants";
+import models from "./database";
 
 const app = express();
 
-
 const allowedOrigins =
 	/^https?:\/\/(?:localhost|opportunities(?:-api)?\.stuysu\.org)|opportunities(stuysu)?\.netlify\.(?:com|app)$/;
+
+apolloServer.start().then(() =>
 app.use(
+	'/graphql',
 	cors({
 		origin: (origin, callback) => {
 			if (
@@ -22,12 +28,66 @@ app.use(
 			}
 		},
 		credentials: true
+	}),
+	expressMiddleware(apolloServer, {
+		context: async ({ req, res }) => {
+			let user, signedIn;
+			let jwt;
+
+			if(req.cookies){
+				jwt = req.cookies['auth-jwt'];
+			}
+
+			if(!jwt && req.headers){
+				jwt = req.headers['x-access-token'] || req.headers['authorization'];
+			}
+			if(jwt && jwt.startsWith('Bearer ')){
+				jwt = jwt.replace('Bearer ', '');
+			}
+			if(jwt) {
+				try {
+					const data = await verify(jwt, PUBLIC_KEY);
+					if (data) {
+						user = await models.users.findOne({
+							where: {
+								id: data.user.id
+							},
+						});
+						signedIn = Boolean(user);
+					}
+				}
+				catch (e) {}
+			}
+
+			function authenticationRequired() {
+				if (!signedIn) {
+					throw new ForbiddenError(
+						'You must be signed in to perform that query'
+					);
+				}
+			}
+
+			function facultyRequired() {
+				authenticationRequired();
+				if (!user.isFaculty) {
+					throw new ForbiddenError(
+						"You don't have the necessary permissions to perform that query"
+					)
+				}
+			}
+
+			const setCookie = (...a) => res.cookie(...a);
+			return {
+				signedIn,
+				user,
+				authenticationRequired,
+				facultyRequired,
+				models,
+				setCookie,
+			};
+		},
+
 	})
-);
-
-apolloServer.start().then(() => apolloServer.applyMiddleware({ app, path: "/graphql", cors: false}));
-
-// dev env for now
-// export default app;
+));
 
 app.listen(process.env.PORT || 3001, () => console.log(`Listening on port ${process.env.PORT || 3001}`))

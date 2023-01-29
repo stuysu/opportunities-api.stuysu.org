@@ -1,20 +1,23 @@
 import {createComplexityLimitRule} from "graphql-validation-complexity"
-
-import {verify} from 'jsonwebtoken';
-
-import {PUBLIC_KEY} from '../constants';
-
-import {
-	ApolloServer,
-	ApolloError,
-	ValidationError,
-	ForbiddenError,
-} from "apollo-server-express"
-import {ApolloServerPluginLandingPageGraphQLPlayground} from "apollo-server-core"
+import { ApolloServer } from "@apollo/server";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
+import { ApolloServerErrorCode } from "@apollo/server/errors";
+import { GraphQLError } from "graphql/error";
 
-const models = require("../database");
+// Apollo Server v3-style error class back-compat
+export const ApolloError = (err, code) => {
+	return new GraphQLError(err, {extensions: { code }})
+}
+export const AuthenticationError = (err) => {
+	return new GraphQLError(err, {extensions: {code: 'UNAUTHENTICATED'}})
+};
+export const ForbiddenError = (err) => {
+	return new GraphQLError(err, {extensions: {code: 'FORBIDDEN'}})
+};
+export const UserInputError = (err) => {
+	return new GraphQLError(err, {extensions: {code: ApolloServerErrorCode.BAD_USER_INPUT}})
+};
 
 const ComplexityLimitRule = createComplexityLimitRule(75000, {
 	scalarCost: 1,
@@ -22,86 +25,16 @@ const ComplexityLimitRule = createComplexityLimitRule(75000, {
 	listFactor: 10
 });
 
-const apolloServer = new ApolloServer({
+export const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
-	context: async ({ req, res }) => {
-		
-		let user, signedIn;
-		
-		let jwt;
-
-		if(req.cookies){
-			//console.log("has cookies");
-			jwt = req.cookies['auth-jwt'];
-		}
-		
-		if(!jwt && req.headers){
-			jwt = req.headers['x-access-token'] || req.headers['authorization'];
-		}
-
-		//console.log(jwt);
-
-		if(jwt && jwt.startsWith('Bearer ')){
-			jwt = jwt.replace('Bearer ', '');
-		}
-		
-		if(jwt){
-			try{
-				const data = await verify(jwt, PUBLIC_KEY);
-				if(data){
-					user = await models.users.findOne({
-						where: {
-							id: data.user.id
-						},
-					});
-					signedIn = Boolean(user);
-				}
-			} catch (e){
-			}
-		}
-		
-		function authenticationRequired() {
-			if (!signedIn) {
-				throw new ForbiddenError(
-					'You must be signed in to perform that query'
-				);
-			}
-		}
-
-		function facultyRequired() {
-			authenticationRequired();
-			if (!user.isFaculty) {
-				throw new ForbiddenError(
-					"You don't have the necessary permissions to perform that query"
-				)
-			}
-		}
-		
-		const setCookie = (...a) => res.cookie(...a);
-		return {
-			signedIn,
-			user,
-			authenticationRequired,
-			facultyRequired,
-			models,
-			setCookie,
-		};
-	},
-	uploads: false,
 	introspection: true,
-	plugins: [
-		ApolloServerPluginLandingPageGraphQLPlayground({
-			settings: {
-				"request.credentials": "same-origin"
-			}
-		})
-	],
 	validationRules: [ComplexityLimitRule],
-	formatError: err => {
+	formatError: (gQLErr, err) => {
+		// TODO: rewrite considering https://www.apollographql.com/docs/apollo-server/migration/#error-formatting-changes
+		// https://www.apollographql.com/docs/apollo-server/migration/#built-in-error-classes
 		const safeError =
-			err instanceof ApolloError ||
-			err instanceof ValidationError ||
+			err instanceof GraphQLError ||
 			(err && err.message === "Not allowed by CORS");
 
 		const internalError = err && err.extensions && err.extensions.code && err.extensions.code === "INTERNAL_SERVER_ERROR";

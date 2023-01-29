@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-server-express';
+import { ApolloError } from "../../index";
 
 export default async (
     _, 
