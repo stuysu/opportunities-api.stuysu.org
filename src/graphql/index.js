@@ -38,29 +38,16 @@ export const apolloServer = new ApolloServer({
 	resolvers,
 	introspection: true,
 	validationRules: [ComplexityLimitRule],
-	formatError: (gQLErr, err) => {
-		// TODO: rewrite considering https://www.apollographql.com/docs/apollo-server/migration/#error-formatting-changes
-		// https://www.apollographql.com/docs/apollo-server/migration/#built-in-error-classes
-		const safeError =
-			err instanceof GraphQLError ||
-			(err && err.message === "Not allowed by CORS");
-
-		const internalError = err && err.extensions && err.extensions.code && err.extensions.code === "INTERNAL_SERVER_ERROR";
-
-		if (!safeError || internalError) {
-			console.log(JSON.stringify(err, null, 2));
-			return new Error(
-				"There was an unknown error on the server. Rest assured it has been reported. Feel free to contact us at it@stuysu.org to provide more information."
-			);
+	formatError: (formattedError) => {
+		if (formattedError.extensions.code === ApolloServerErrorCode.INTERNAL_SERVER_ERROR) {
+			return {
+				...formattedError,
+				message: "There was an unknown error on the server. Rest assured it has been reported. Feel free to contact us at it@stuysu.org to provide more information.",
+			};
 		}
 
-		if (
-			process.env.NODE_ENV === "production" && err && err.extensions && err.extensions.exception && err.extensions.exception.stacktrace) {
-			delete err.extensions.exception.stacktrace;
-		}
-
-		return err;
-	}
+		return formattedError;
+	},
 });
 
 export default apolloServer;
