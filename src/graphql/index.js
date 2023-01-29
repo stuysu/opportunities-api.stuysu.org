@@ -1,4 +1,4 @@
-import {createComplexityLimitRule} from "graphql-validation-complexity"
+import { createComplexityLimitRule } from "graphql-validation-complexity";
 import { ApolloServer } from "@apollo/server";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
@@ -8,17 +8,17 @@ import { GraphQLError } from "graphql/error";
 // Apollo Server v3-style error classes for back-compat
 export class ApolloError extends GraphQLError {
 	constructor(err, code) {
-		super(err, {extensions: { code }});
+		super(err, { extensions: { code } });
 	}
 }
 export class AuthenticationError extends ApolloError {
 	constructor(err) {
-		super(err, 'UNAUTHENTICATED');
+		super(err, "UNAUTHENTICATED");
 	}
 }
 export class ForbiddenError extends ApolloError {
 	constructor(err) {
-		super(err, 'FORBIDDEN');
+		super(err, "FORBIDDEN");
 	}
 }
 export class UserInputError extends ApolloError {
@@ -38,16 +38,17 @@ export const apolloServer = new ApolloServer({
 	resolvers,
 	introspection: true,
 	validationRules: [ComplexityLimitRule],
-	formatError: (formattedError) => {
+	formatError: formattedError => {
 		if (formattedError.extensions.code === ApolloServerErrorCode.INTERNAL_SERVER_ERROR) {
 			return {
 				...formattedError,
-				message: "There was an unknown error on the server. Rest assured it has been reported. Feel free to contact us at it@stuysu.org to provide more information.",
+				message:
+					"There was an unknown error on the server. Rest assured it has been reported. Feel free to contact us at it@stuysu.org to provide more information."
 			};
 		}
 
 		return formattedError;
-	},
+	}
 });
 
 export default apolloServer;
