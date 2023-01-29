@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+import { json } from 'body-parser';
 
 import { apolloServer, ForbiddenError } from "./graphql";
 import { expressMiddleware } from '@apollo/server/express4';
@@ -29,6 +30,7 @@ app.use(
 		},
 		credentials: true
 	}),
+	json(),
 	expressMiddleware(apolloServer, {
 		context: async ({ req, res }) => {
 			let user, signedIn;
