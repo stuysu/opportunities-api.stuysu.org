@@ -1,5 +1,5 @@
-export default async(root, args, context) => {
+export default async (root, args, context) => {
 	context.authenticationRequired();
-    const { models } = context;
-    return await models.categories.findAll();
-}
+	const { models } = context;
+	return await models.categories.findAll();
+};

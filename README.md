@@ -1,30 +1,38 @@
 # Opportunities API
+
 This is the backend for [opportunities.stuysu.org](https://opportunities.stuysu.org).
 
 ## Quickstart
+
 Clone the repository
+
 ```shell
 git clone https://github.com/stuysu/opportunities-api.stuysu.org.git
 ```
 
 Install `node_modules`
+
 ```shell
 npm i
 ```
 
 For local development: run SQLite DB migrations
+
 ```shell
 npm run migrate
 ```
 
-Generate an RS512 key pair for use in verifying JWTs.
+Generate an ES512 key pair for use in verifying JWTs.
+
 ```shell
 openssl ecparam -genkey -name secp521r1 -noout -out ecdsa-p521-private.pem
 openssl ec -in ecdsa-p521-private.pem -pubout -out ecdsa-p521-public.pem
 ```
+
 (Source: [ozomer](https://github.com/auth0/node-jwa/issues/23))
 
 Configure environment variables in the `.env` config file
+
 ```shell
 # either one, if neither are defined, defaults to local sqlite
 SEQUELIZE_URL=
@@ -52,11 +60,13 @@ dGVyIGlmIGl0IHdhcyBiYWQKCgo=
 ```
 
 For local development: start dev server
+
 ```shell
 npm run dev
 ```
 
 Deploy server
+
 ```shell
 npm run start
 ```

@@ -1,6 +1,5 @@
-import {gql} from "apollo-server-express";
-
-export default gql`
+// GQL string
+export default `
 	type Category {
         id: Int
         name: String!

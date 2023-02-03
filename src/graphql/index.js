@@ -1,20 +1,31 @@
-import {createComplexityLimitRule} from "graphql-validation-complexity"
-
-import {verify} from 'jsonwebtoken';
-
-import {PUBLIC_KEY} from '../constants';
-
-import {
-	ApolloServer,
-	ApolloError,
-	ValidationError,
-	ForbiddenError,
-} from "apollo-server-express"
-import {ApolloServerPluginLandingPageGraphQLPlayground} from "apollo-server-core"
+import { createComplexityLimitRule } from "graphql-validation-complexity";
+import { ApolloServer } from "@apollo/server";
 import typeDefs from "./schema";
 import resolvers from "./resolvers";
+import { ApolloServerErrorCode } from "@apollo/server/errors";
+import { GraphQLError } from "graphql/error";
 
-const models = require("../database");
+// Apollo Server v3-style error classes for back-compat
+export class ApolloError extends GraphQLError {
+	constructor(err, code) {
+		super(err, { extensions: { code } });
+	}
+}
+export class AuthenticationError extends ApolloError {
+	constructor(err) {
+		super(err, "UNAUTHENTICATED");
+	}
+}
+export class ForbiddenError extends ApolloError {
+	constructor(err) {
+		super(err, "FORBIDDEN");
+	}
+}
+export class UserInputError extends ApolloError {
+	constructor(err) {
+		super(err, ApolloServerErrorCode.BAD_USER_INPUT);
+	}
+}
 
 const ComplexityLimitRule = createComplexityLimitRule(75000, {
 	scalarCost: 1,
@@ -22,103 +33,21 @@ const ComplexityLimitRule = createComplexityLimitRule(75000, {
 	listFactor: 10
 });
 
-const apolloServer = new ApolloServer({
+export const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
-	context: async ({ req, res }) => {
-		
-		let user, signedIn;
-		
-		let jwt;
-
-		if(req.cookies){
-			//console.log("has cookies");
-			jwt = req.cookies['auth-jwt'];
-		}
-		
-		if(!jwt && req.headers){
-			jwt = req.headers['x-access-token'] || req.headers['authorization'];
-		}
-
-		//console.log(jwt);
-
-		if(jwt && jwt.startsWith('Bearer ')){
-			jwt = jwt.replace('Bearer ', '');
-		}
-		
-		if(jwt){
-			try{
-				const data = await verify(jwt, PUBLIC_KEY);
-				if(data){
-					user = await models.users.findOne({
-						where: {
-							id: data.user.id
-						},
-					});
-					signedIn = Boolean(user);
-				}
-			} catch (e){
-			}
-		}
-		
-		function authenticationRequired() {
-			if (!signedIn) {
-				throw new ForbiddenError(
-					'You must be signed in to perform that query'
-				);
-			}
-		}
-
-		function facultyRequired() {
-			authenticationRequired();
-			if (!user.isFaculty) {
-				throw new ForbiddenError(
-					"You don't have the necessary permissions to perform that query"
-				)
-			}
-		}
-		
-		const setCookie = (...a) => res.cookie(...a);
-		return {
-			signedIn,
-			user,
-			authenticationRequired,
-			facultyRequired,
-			models,
-			setCookie,
-		};
-	},
-	uploads: false,
 	introspection: true,
-	plugins: [
-		ApolloServerPluginLandingPageGraphQLPlayground({
-			settings: {
-				"request.credentials": "same-origin"
-			}
-		})
-	],
 	validationRules: [ComplexityLimitRule],
-	formatError: err => {
-		const safeError =
-			err.originalError instanceof ApolloError ||
-			err instanceof ValidationError ||
-			(err.originalError && err.originalError.message === "Not allowed by CORS");
-
-		const internalError = err && err.extensions && err.extensions.code && err.extensions.code === "INTERNAL_SERVER_ERROR";
-
-		if (!safeError || internalError) {
-			console.log(JSON.stringify(err, null, 2));
-			return new Error(
-				"There was an unknown error on the server. Rest assured it has been reported. Feel free to contact us at it@stuysu.org to provide more information."
-			);
+	formatError: formattedError => {
+		if (formattedError.extensions.code === ApolloServerErrorCode.INTERNAL_SERVER_ERROR) {
+			return {
+				...formattedError,
+				message:
+					"There was an unknown error on the server. Rest assured it has been reported. Feel free to contact us at it@stuysu.org to provide more information."
+			};
 		}
 
-		if (
-			process.env.NODE_ENV === "production" && err && err.extensions && err.extensions.exception && err.extensions.exception.stacktrace) {
-			delete err.extensions.exception.stacktrace;
-		}
-
-		return err;
+		return formattedError;
 	}
 });
 
