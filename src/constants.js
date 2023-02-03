@@ -1,15 +1,12 @@
-import path from 'path';
+import path from "path";
 
-require('dotenv').config();
+require("dotenv").config();
 
-const sqlitePath = path.resolve(__dirname, 'app.db');
+const sqlitePath = path.resolve(__dirname, "app.db");
 
-export const SEQUELIZE_URL =
-	process.env.SEQUELIZE_URL ||
-	process.env.DATABASE_URL ||
-	`sqlite::${sqlitePath}`;
+export const SEQUELIZE_URL = process.env.SEQUELIZE_URL || process.env.DATABASE_URL || `sqlite::${sqlitePath}`;
 
-export const NODE_ENV = process.env.NODE_ENV || 'development';
+export const NODE_ENV = process.env.NODE_ENV || "development";
 
 export const GOOGLE_LOGIN_CLIENT_ID = "979775004862-gg66eb6tialnpivrvsjmq7j7hcosths7.apps.googleusercontent.com";
 

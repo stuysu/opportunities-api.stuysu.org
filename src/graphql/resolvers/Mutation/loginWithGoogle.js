@@ -2,23 +2,23 @@ import { AuthenticationError } from "../../index";
 
 import validateGoogleIDToken from "../../../utils/validateGoogleIDToken";
 
-import {sign} from 'jsonwebtoken';
+import { sign } from "jsonwebtoken";
 
-import {PRIVATE_KEY, WHITELISTED_EMAIL_DOMAINS} from "../../../constants";
+import { PRIVATE_KEY, WHITELISTED_EMAIL_DOMAINS } from "../../../constants";
 
-const {users, oAuthIds} = require("../../../database");
+const { users, oAuthIds } = require("../../../database");
 
-const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
+const loginWithGoogle = async (_, { googleOAuthToken }, { setCookie }) => {
 	const payload = await validateGoogleIDToken(googleOAuthToken);
-	
-	if(!payload){
+
+	if (!payload) {
 		throw new AuthenticationError("Invalid Google ID token.");
 	}
-	
-	if(!payload.email_verified){
+
+	if (!payload.email_verified) {
 		throw new AuthenticationError("Email address with the Google ID token is not verified.");
 	}
-	
+
 	const oAuthId = await oAuthIds.findOne({
 		where: {
 			platformId: payload.sub,
@@ -26,16 +26,17 @@ const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
 		},
 		include: users
 	});
-	
+
 	let user = oAuthId ? oAuthId.user : null;
-	
-	if(!user){
+
+	if (!user) {
 		user = await users.findOne({
 			where: {
 				email: payload.email
-			},
+			}
 		});
-		if(user){ // update oauthids
+		if (user) {
+			// update oauthids
 			await oAuthIds.create({
 				userId: user.id,
 				platform: "google",
@@ -44,10 +45,10 @@ const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
 			});
 		}
 	}
-	
-	if(!user){
+
+	if (!user) {
 		const isInSchool = WHITELISTED_EMAIL_DOMAINS.includes(payload.hd);
-		if(!isInSchool){
+		if (!isInSchool) {
 			throw new AuthenticationError("Email not associated with an account");
 		}
 		// if is in school, make new account
@@ -59,12 +60,12 @@ const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
 			active: true
 		});
 	}
-	
+
 	const id = user.id;
 	const firstName = user.firstName;
 	const lastName = user.lastName;
 	const email = user.email;
-	
+
 	const token = await sign(
 		{
 			user: {
@@ -75,19 +76,19 @@ const loginWithGoogle = async (_, {googleOAuthToken}, {setCookie}) => {
 			}
 		},
 		{ key: PRIVATE_KEY },
-		{ algorithm: "ES512", expiresIn: "30d"}
+		{ algorithm: "ES512", expiresIn: "30d" }
 	);
-	
+
 	//console.log(verify(token, PUBLIC_KEY, {algorithms: ["RS512"]}));
-	
-	setCookie('auth-jwt', token, {
+
+	setCookie("auth-jwt", token, {
 		maxAge: 1000 * 60 * 60 * 24 * 30,
-		path: '/',
+		path: "/",
 		httpOnly: true,
-		sameSite: 'none',
+		sameSite: "none",
 		secure: true
 	});
-	
+
 	return token;
 };
 

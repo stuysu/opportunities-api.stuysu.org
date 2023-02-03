@@ -1,9 +1,6 @@
-import { SEQUELIZE_URL } from '../constants';
+import { SEQUELIZE_URL } from "../constants";
 
-const logger =
-	process.env.SEQUELIZE_LOG === 'advanced'
-		? console.log
-		: query => console.log(query);
+const logger = process.env.SEQUELIZE_LOG === "advanced" ? console.log : query => console.log(query);
 
 const logging = process.env.SEQUELIZE_LOG ? logger : false;
 
@@ -11,13 +8,13 @@ module.exports = {
 	development: {
 		url: SEQUELIZE_URL,
 		define: {
-			charset: 'utf8',
-			collate: 'utf8mb4_unicode_ci'
+			charset: "utf8",
+			collate: "utf8mb4_unicode_ci"
 		},
 		ssl: true,
 		native: true,
 		logging,
-		dialect: SEQUELIZE_URL.includes('sqlite') ? 'sqlite' : 'mysql'
+		dialect: SEQUELIZE_URL.includes("sqlite") ? "sqlite" : "mysql"
 	},
 	production: {
 		url: SEQUELIZE_URL,
@@ -28,12 +25,12 @@ module.exports = {
 			idle: 10000
 		},
 		define: {
-			charset: 'utf8mb4',
-			collate: 'utf8mb4_unicode_ci'
+			charset: "utf8mb4",
+			collate: "utf8mb4_unicode_ci"
 		},
 		native: true,
 		ssl: true,
 		logging,
-		dialect: 'mysql'
+		dialect: "mysql"
 	}
 };
