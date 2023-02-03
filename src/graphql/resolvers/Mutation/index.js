@@ -11,5 +11,5 @@ export default {
 	editOpportunity,
 	deleteOpportunity,
 	loginWithGoogle,
-	logout
+	logout,
 };

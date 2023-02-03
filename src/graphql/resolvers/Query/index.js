@@ -11,5 +11,5 @@ export default {
 	opportunities,
 	categories,
 	eligibilities,
-	authenticatedUser
+	authenticatedUser,
 };

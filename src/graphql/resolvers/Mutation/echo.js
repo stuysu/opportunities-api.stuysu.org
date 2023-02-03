@@ -1,3 +1,6 @@
-export default async (_, { str }) => {
+export default async (
+	_,
+	{ str }
+) => {
 	return str;
-};
+}

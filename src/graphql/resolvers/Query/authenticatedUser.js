@@ -1,3 +1,3 @@
-export default async (_, args, { signedIn, user }) => {
-	return signedIn ? user : null;
-};
+export default async(_, args, {signedIn, user}) => {
+	return(signedIn ? user : null);
+}

@@ -8,8 +8,7 @@
 		"dev": "nodemon --require esm src/index.js",
 		"migrate": "node --require esm node_modules/sequelize-cli/lib/sequelize db:migrate",
 		"seedSchedules": "node --require esm src/defaultSchedules.js",
-		"build": "npm run migrate",
-		"prettier": "npx prettier --write ."
+		"build": "npm run migrate"
 	},
 	"dependencies": {
 		"@apollo/server": "^4.3.2",
@@ -31,15 +30,16 @@
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.20",
-		"prettier": "2.8.3",
 		"sqlite3": "^5.1.4"
 	},
 	"prettier": {
-		"arrowParens": "avoid",
 		"useTabs": true,
 		"tabWidth": 4,
-		"printWidth": 120,
+		"arrowParens": "avoid",
 		"trailingComma": "none",
-		"singleQuote": false
+		"semi": true,
+		"singleQuote": true,
+		"printWidth": 80,
+		"endOfLine": "lf"
 	}
 }

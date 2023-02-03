@@ -1,16 +1,16 @@
 export default async (_, args, { setCookie }) => {
-	setCookie("auth-jwt", "", {
+	setCookie('auth-jwt', '', {
 		expires: 0,
-		path: "/",
+		path: '/',
 		httpOnly: true,
-		sameSite: "none",
+		sameSite: 'none',
 		secure: true
 	});
-	setCookie("session", "", {
+	setCookie('session', '', {
 		expires: 0,
 		httpOnly: true,
-		path: "/",
-		sameSite: "none",
+		path: '/',
+		sameSite: 'none',
 		secure: true
 	});
 	return true;
