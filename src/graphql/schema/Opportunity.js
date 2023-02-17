@@ -11,5 +11,6 @@ export default `
 		cost: Int
 		appDeadline: Date
 		link: String
+		archived: Boolean
 	}
 `;
