@@ -44,10 +44,10 @@ export default async (root, args, context) => {
 		userInclude.required = true;
 		userInclude.where = {
 			id: user
-		}
+		};
 	}
 	filterParams.include.push(userInclude);
-	
+
 	//console.log(filterParams);
 	return await models.opportunities.findAll(filterParams);
 };

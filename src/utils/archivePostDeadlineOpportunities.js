@@ -1,11 +1,11 @@
 import models from "../database";
-var moment = require('moment-timezone');
+var moment = require("moment-timezone");
 
-const checkIfOpportunityPastDeadline = (opportunity) => {
+const checkIfOpportunityPastDeadline = opportunity => {
 	// DEBUG: console.log(opportunity.appDeadline);
 	const deadline = moment.utc(opportunity.appDeadline);
 	// treat deadline as 23:59:59 eastern time
-	deadline.add(23, 'hours').add(59, 'minutes').add(59, 'seconds');
+	deadline.add(23, "hours").add(59, "minutes").add(59, "seconds");
 	// converts time to NY time, including daylight savings, without changing "stated" time
 	deadline.tz("America/New_York", true);
 	// converts time back to UTC, changing stated time to match same time instance
@@ -13,20 +13,20 @@ const checkIfOpportunityPastDeadline = (opportunity) => {
 	// DEBUG: console.log(deadline.format());
 	const curTime = new moment();
 	// DEBUG: console.log(curTime.format());
-	if(deadline.isBefore(curTime)){
-		if(!opportunity.archived){
+	if (deadline.isBefore(curTime)) {
+		if (!opportunity.archived) {
 			opportunity.archived = true;
 			opportunity.save();
 			console.log(`Opportunity with ID ${opportunity.id} archived!`);
 		}
 	} else {
-		if(opportunity.archived){
+		if (opportunity.archived) {
 			opportunity.archived = false;
 			opportunity.save();
 			console.log(`Opportunity with ID ${opportunity.id} un-archived!`);
 		}
 	}
-}
+};
 
 const archivePostDeadlineOpportunities = async () => {
 	console.log("Running cronjob to archive outdated opportunities");
