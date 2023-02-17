@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			users.hasMany(models.oAuthIds);
 			users.belongsToMany(models.opportunities, {
-				through: models.userOpps
+				through: models.userOpp
 			});
 		}
 	}

@@ -5,7 +5,8 @@ export default `
 		opportunityById(id: Int!): Opportunity
 		opportunities(
 			categories: [Int],
-			eligibilities: [Int]
+			eligibilities: [Int],
+			user: [Int]
 		): [Opportunity]
 		categories: [Category]
 		eligibilities: [Eligibility]

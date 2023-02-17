@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      userOpp.belongsTo(models.opportunities);
+      userOpp.belongsTo(models.users);
     }
   };
   userOpp.init({

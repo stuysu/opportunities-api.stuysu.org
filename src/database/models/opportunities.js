@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 				through: models.oppEligibilities
 			});
 			opportunities.belongsToMany(models.users, {
-				through: models.userOpps
+				through: models.userOpp
 			});
 		}
 	}
