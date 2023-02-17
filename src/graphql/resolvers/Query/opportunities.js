@@ -48,6 +48,6 @@ export default async (root, args, context) => {
 	}
 	filterParams.include.push(userInclude);
 
-	//console.log(filterParams);
+	console.log(filterParams);
 	return await models.opportunities.findAll(filterParams);
 };
