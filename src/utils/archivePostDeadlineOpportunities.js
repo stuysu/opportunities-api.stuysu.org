@@ -2,7 +2,7 @@ import models from "../database";
 var moment = require('moment-timezone');
 
 const checkIfOpportunityPastDeadline = (opportunity) => {
-	console.log(opportunity.appDeadline);
+	// DEBUG: console.log(opportunity.appDeadline);
 	const deadline = moment.utc(opportunity.appDeadline);
 	// treat deadline as 23:59:59 eastern time
 	deadline.add(23, 'hours').add(59, 'minutes').add(59, 'seconds');
@@ -10,9 +10,9 @@ const checkIfOpportunityPastDeadline = (opportunity) => {
 	deadline.tz("America/New_York", true);
 	// converts time back to UTC, changing stated time to match same time instance
 	deadline.utcOffset(0, false);
-	console.log(deadline.format());
+	// DEBUG: console.log(deadline.format());
 	const curTime = new moment();
-	console.log(curTime.format());
+	// DEBUG: console.log(curTime.format());
 	if(deadline.isBefore(curTime)){
 		if(!opportunity.archived){
 			opportunity.archived = true;

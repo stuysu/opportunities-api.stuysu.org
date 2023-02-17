@@ -12,7 +12,7 @@ import archivePostDeadlineOpportunities from './utils/archivePostDeadlineOpportu
 
 const schedule = require('node-schedule');
 
-const job = schedule.scheduleJob('* * * * *', archivePostDeadlineOpportunities);
+const job = schedule.scheduleJob('5 * * * *', archivePostDeadlineOpportunities);
 
 const app = express();
 
