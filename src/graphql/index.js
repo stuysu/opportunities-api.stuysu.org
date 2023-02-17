@@ -37,11 +37,9 @@ export const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
 	introspection: true,
-	playground: true,
 	validationRules: [ComplexityLimitRule],
 	formatError: formattedError => {
 		if (formattedError.extensions.code === ApolloServerErrorCode.INTERNAL_SERVER_ERROR) {
-			console.log(formattedError);
 			return {
 				...formattedError,
 				message:
