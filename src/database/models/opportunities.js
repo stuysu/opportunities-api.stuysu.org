@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 			location: DataTypes.STRING,
 			cost: DataTypes.INTEGER,
 			appDeadline: DataTypes.DATE,
-			link: DataTypes.TEXT
+			link: DataTypes.TEXT,
+			archived: DataTypes.BOOLEAN
 		},
 		{
 			sequelize,

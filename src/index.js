@@ -8,6 +8,12 @@ import { verify } from "jsonwebtoken";
 import { NODE_ENV, PUBLIC_KEY } from "./constants";
 import models from "./database";
 
+import archivePostDeadlineOpportunities from './utils/archivePostDeadlineOpportunities';
+
+const schedule = require('node-schedule');
+
+const job = schedule.scheduleJob('* * * * *', archivePostDeadlineOpportunities);
+
 const app = express();
 
 const allowedOrigins =
