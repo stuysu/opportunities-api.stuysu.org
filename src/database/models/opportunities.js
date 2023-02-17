@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
 			opportunities.belongsToMany(models.eligibilities, {
 				through: models.oppEligibilities
 			});
+			opportunities.belongsToMany(models.users, {
+				through: models.userOpps
+			});
 		}
 	}
 	opportunities.init(

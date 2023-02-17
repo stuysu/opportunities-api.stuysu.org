@@ -26,6 +26,10 @@ export default `
 			link: String
 		): Opportunity!
 		deleteOpportunity(id: Int!): Boolean!
+		saveOpportunity(
+		  opportunityId: Int!,
+		  userId: Int!
+		): Boolean
 		loginWithGoogle(googleOAuthToken: String!): String!
 		logout: Boolean
 	}
