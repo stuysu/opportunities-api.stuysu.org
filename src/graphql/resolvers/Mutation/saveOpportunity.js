@@ -1,5 +1,5 @@
-export default async (_, { opportunityId, userId }, { models: { userOpp } }) => {
-	await userOpp.create({
+export default async (_, { opportunityId, userId }, { models: { userOpps } }) => {
+	await userOpps.create({
 		opportunityId: opportunityId,
 		userId: userId
 	});
