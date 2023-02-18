@@ -1,7 +1,7 @@
 export default async (root, args, context) => {
 	// context.authenticationRequired();
 
-	let { categories, eligibilities, user } = args;
+	let { cost, categories, eligibilities, user } = args;
 	const { models } = context;
 	const { Op } = models.Sequelize;
 
@@ -11,6 +11,13 @@ export default async (root, args, context) => {
 			// [Op.and]: []
 		]
 	};
+
+	// Filter by cost
+	if (cost) {
+		filterParams.where.push({
+			cost: {[Op.lte]: cost}
+		});
+	}
 
 	// Add filter for categories
 	const categoryInclude = {
