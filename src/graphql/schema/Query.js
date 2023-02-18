@@ -4,6 +4,7 @@ export default `
 		ping: String!,
 		opportunityById(id: Int!): Opportunity
 		opportunities(
+			cost: Int,
 			categories: [Int],
 			eligibilities: [Int],
 			user: Int

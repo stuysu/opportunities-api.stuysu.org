@@ -14,9 +14,9 @@ export default async (root, args, context) => {
 
 	// Filter by cost
 	if (cost) {
-		filterParams.where.push({
-			cost: {[Op.lte]: cost}
-		});
+		filterParams.where.cost = {
+			[Op.lte]: cost
+		};
 	}
 
 	// Add filter for categories
