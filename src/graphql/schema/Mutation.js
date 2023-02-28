@@ -30,6 +30,10 @@ export default `
 		  opportunityId: Int!,
 		  userId: Int!
 		): Boolean
+		unsaveOpportunity(
+		  opportunityId: Int!,
+		  userId: Int!
+		): Boolean
 		loginWithGoogle(googleOAuthToken: String!): String!
 		logout: Boolean
 	}
