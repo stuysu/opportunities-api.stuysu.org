@@ -1,6 +1,6 @@
 import {ForbiddenError} from "../../index";
 
-export default async (_, { opportunityId, userId }, { models: { userOpps } }) => {
+export default async (_, { opportunityId, userId }, { models: { userOpps }, user, authenticationRequired}) => {
 
 	authenticationRequired();
 	if(user.id != userId){
