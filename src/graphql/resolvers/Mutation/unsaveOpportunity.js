@@ -1,6 +1,6 @@
 import {ForbiddenError} from "../../index";
 
-export default async (_, { opportunityId, userId }, { models: { userOpps } }) => {
+export default async (_, { opportunityId, userId }, { models: { userOpps } , user, authenticationRequired}) => {
 
 	authenticationRequired();
 	if(user.id != userId){
@@ -13,11 +13,11 @@ export default async (_, { opportunityId, userId }, { models: { userOpps } }) =>
 			opportunityId: opportunityId
 		}
 	});
-	if (numExistingPairs > 0) {
-		throw new ForbiddenError("You have saved this opportunity already!");
+	if (numExistingPairs == 0) {
+		throw new ForbiddenError("You have not saved this opportunity!");
 	}
 
-	await userOpps.create({
+	await userOpps.destroy({
 		opportunityId: opportunityId,
 		userId: userId
 	});
