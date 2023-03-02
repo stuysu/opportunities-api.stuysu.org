@@ -12,5 +12,6 @@ export default `
 		categories: [Category]
 		eligibilities: [Eligibility]
 		authenticatedUser: User
+		isOpportunitySaved(opportunityId: Int!, userId: Int!): Boolean
 	}
 `;
