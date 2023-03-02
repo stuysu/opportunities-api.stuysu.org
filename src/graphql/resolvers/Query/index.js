@@ -4,6 +4,7 @@ import opportunities from "./opportunities";
 import categories from "./categories";
 import eligibilities from "./eligibilities";
 import authenticatedUser from "./authenticatedUser";
+import isOpportunitySaved from "./isOpportunitySaved";
 
 export default {
 	ping,
@@ -11,5 +12,6 @@ export default {
 	opportunities,
 	categories,
 	eligibilities,
-	authenticatedUser
+	authenticatedUser,
+	isOpportunitySaved
 };
