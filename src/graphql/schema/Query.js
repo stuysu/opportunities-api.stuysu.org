@@ -7,7 +7,8 @@ export default `
 			cost: Int,
 			categories: [Int],
 			eligibilities: [Int],
-			user: Int
+			user: Int,
+			archived: Boolean
 		): [Opportunity]
 		categories: [Category]
 		eligibilities: [Eligibility]

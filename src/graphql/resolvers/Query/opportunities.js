@@ -1,7 +1,7 @@
 export default async (root, args, context) => {
 	// context.authenticationRequired();
 
-	let { cost, categories, eligibilities, user } = args;
+	let { cost, categories, eligibilities, user, archived } = args;
 	const { models } = context;
 	const { Op } = models.Sequelize;
 
@@ -16,6 +16,18 @@ export default async (root, args, context) => {
 	if (cost) {
 		filterParams.where.cost = {
 			[Op.lte]: cost
+		};
+	}
+
+	//console.log(archived);
+	// 3 options:
+	// undefined: show all
+	// false: only show unarchived
+	// true: only show archived
+	if(archived !== undefined){
+		//console.log("Not undef");
+		filterParams.where.archived = {
+			[Op.eq]: archived
 		};
 	}
 
