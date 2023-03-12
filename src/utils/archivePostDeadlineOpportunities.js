@@ -2,6 +2,14 @@ import models from "../database";
 var moment = require("moment-timezone");
 
 const checkIfOpportunityPastDeadline = opportunity => {
+	if(opportunity.appDeadline == "1970-01-01") { // rolling basis
+		if (opportunity.archived) {
+			opportunity.archived = false;
+			opportunity.save();
+			console.log(`Opportunity with ID ${opportunity.id} unarchived due to being rolling basis!`);
+		}
+		return;
+	}
 	// DEBUG: console.log(opportunity.appDeadline);
 	const deadline = moment.utc(opportunity.appDeadline);
 	// treat deadline as 23:59:59 eastern time
