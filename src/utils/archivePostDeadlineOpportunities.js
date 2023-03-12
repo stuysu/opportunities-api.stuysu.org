@@ -2,6 +2,10 @@ import models from "../database";
 var moment = require("moment-timezone");
 
 const checkIfOpportunityPastDeadline = opportunity => {
+	console.log(opportunity.appDeadline);
+	const deadline = moment.utc(opportunity.appDeadline);
+	console.log(deadline);
+	console.log(moment.utc("1970-01-01 00:00:00"));
 	if(opportunity.appDeadline == "1970-01-01 00:00:00") { // rolling basis
 		if (opportunity.archived) {
 			opportunity.archived = false;
@@ -10,8 +14,6 @@ const checkIfOpportunityPastDeadline = opportunity => {
 		}
 		return;
 	}
-	// DEBUG: console.log(opportunity.appDeadline);
-	const deadline = moment.utc(opportunity.appDeadline);
 	// treat deadline as 23:59:59 eastern time
 	deadline.add(23, "hours").add(59, "minutes").add(59, "seconds");
 	// converts time to NY time, including daylight savings, without changing "stated" time
