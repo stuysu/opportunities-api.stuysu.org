@@ -4,7 +4,7 @@ var moment = require("moment-timezone");
 const checkIfOpportunityPastDeadline = opportunity => {
 	//console.log(opportunity.appDeadline);
 	const deadline = moment.utc(opportunity.appDeadline);
-	if(deadline === moment.utc("1970-01-01 00:00:00")) { // rolling basis
+	if(deadline.isSame(moment.utc("1970-01-01 00:00:00"))) { // rolling basis
 		if (opportunity.archived) {
 			opportunity.archived = false;
 			opportunity.save();
