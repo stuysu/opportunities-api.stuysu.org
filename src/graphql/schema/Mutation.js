@@ -12,7 +12,8 @@ export default `
 			location: String,
 			cost: Int,
 			appDeadline: Date,
-			link: String
+			link: String,
+			archived: Boolean
 		): Opportunity!
 		createOpportunity(
 			title: String!, 
@@ -24,6 +25,7 @@ export default `
 			cost: Int,
 			appDeadline: Date,
 			link: String
+			archived: Boolean
 		): Opportunity!
 		deleteOpportunity(id: Int!): Boolean!
 		saveOpportunity(
