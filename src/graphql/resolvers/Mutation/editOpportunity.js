@@ -32,8 +32,8 @@ export default async (
 	if (cost) editingOpportunity.cost = cost;
 	if (appDeadline) editingOpportunity.appDeadline = appDeadline;
 	if (link) editingOpportunity.link = link;
-	if (editingOpportunity.archived !== undefined && editingOpportunity.archived !== null) editingOpportunity.archived = archived;
-
+	if (editingOpportunity.archived !== undefined && editingOpportunity.archived !== null)
+		editingOpportunity.archived = archived;
 
 	if (categories) {
 		// Delete existing categories

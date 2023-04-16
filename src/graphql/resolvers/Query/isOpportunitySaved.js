@@ -1,9 +1,8 @@
-import {ForbiddenError} from "../../index";
+import { ForbiddenError } from "../../index";
 
-export default async (_, { opportunityId, userId }, { models: { userOpps } , user, authenticationRequired}) => {
-
+export default async (_, { opportunityId, userId }, { models: { userOpps }, user, authenticationRequired }) => {
 	authenticationRequired();
-	if(user.id != userId){
+	if (user.id != userId) {
 		throw new ForbiddenError("You must perform this query on your own user!");
 	}
 
@@ -13,6 +12,6 @@ export default async (_, { opportunityId, userId }, { models: { userOpps } , use
 			opportunityId: opportunityId
 		}
 	});
-	
-	return (numExistingPairs > 0);
-}
+
+	return numExistingPairs > 0;
+};
