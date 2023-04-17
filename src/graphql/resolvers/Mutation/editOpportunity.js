@@ -2,7 +2,7 @@ import { ApolloError } from "../../index";
 
 export default async (
 	_,
-	{ id, title, description, categories, eligibilities, date, location, cost, appDeadline, link },
+	{ id, title, description, categories, eligibilities, date, location, cost, appDeadline, link, archived },
 	{
 		models: {
 			opportunities,
@@ -32,6 +32,8 @@ export default async (
 	if (cost) editingOpportunity.cost = cost;
 	if (appDeadline) editingOpportunity.appDeadline = appDeadline;
 	if (link) editingOpportunity.link = link;
+	if (editingOpportunity.archived !== undefined && editingOpportunity.archived !== null)
+		editingOpportunity.archived = archived;
 
 	if (categories) {
 		// Delete existing categories

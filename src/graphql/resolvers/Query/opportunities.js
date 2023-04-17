@@ -24,7 +24,7 @@ export default async (root, args, context) => {
 	// undefined: show all
 	// false: only show unarchived
 	// true: only show archived
-	if(archived !== undefined){
+	if (archived !== undefined) {
 		//console.log("Not undef");
 		filterParams.where.archived = {
 			[Op.eq]: archived

@@ -1,13 +1,12 @@
-import {ForbiddenError} from "../../index";
+import { ForbiddenError } from "../../index";
 
-export default async (_, { opportunityId, userId }, { models: { userOpps } , user, authenticationRequired}) => {
-
+export default async (_, { opportunityId, userId }, { models: { userOpps }, user, authenticationRequired }) => {
 	console.log("TESTING");
 	console.log("USER ID: " + userId);
 	console.log("OPP ID: " + opportunityId);
 
 	authenticationRequired();
-	if(user.id != userId){
+	if (user.id != userId) {
 		throw new ForbiddenError("You must perform this query on your own user!");
 	}
 

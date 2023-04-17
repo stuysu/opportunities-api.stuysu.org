@@ -2,7 +2,7 @@ import { ForbiddenError } from "../../index";
 
 export default async (
 	_,
-	{ title, description, categories, eligibilities, date, location, cost, appDeadline, link },
+	{ title, description, categories, eligibilities, date, location, cost, appDeadline, link, archived },
 	{
 		models: {
 			opportunities,
@@ -31,7 +31,8 @@ export default async (
 		location,
 		cost,
 		appDeadline,
-		link
+		link,
+		archived
 	});
 
 	// Create categories for the opportunity
