@@ -1,5 +1,5 @@
-import models from "../database";
-var moment = require("moment-timezone");
+import models from "../database/index.js";
+import moment from "moment-timezone";
 
 const checkIfOpportunityPastDeadline = opportunity => {
 	//console.log(opportunity.appDeadline);

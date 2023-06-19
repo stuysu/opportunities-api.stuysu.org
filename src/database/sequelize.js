@@ -1,10 +1,10 @@
-import { SEQUELIZE_URL } from "../constants";
+import { SEQUELIZE_URL } from "../constants.js";
 
-const logger = process.env.SEQUELIZE_LOG === "advanced" ? console.log : query => console.log(query);
+const logger = Deno.env.get("SEQUELIZE_LOG") === "advanced" ? console.log : query => console.log(query);
 
-const logging = process.env.SEQUELIZE_LOG ? logger : false;
+const logging = Deno.env.get("SEQUELIZE_LOG") ? logger : false;
 
-module.exports = {
+const configs = {
 	development: {
 		url: SEQUELIZE_URL,
 		define: {
@@ -34,3 +34,5 @@ module.exports = {
 		dialect: "mysql"
 	}
 };
+
+export default configs;

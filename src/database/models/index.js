@@ -1,16 +1,22 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
-const Sequelize = require("sequelize");
+import fs from "node:fs";
+import path from "node:path";
+import { default as sqlite3 } from "npm:sqlite3"; // Sequelize peer dep
+import { Sequelize } from "npm:sequelize-typescript@2.1.5";  // DENO FIXES
+
+// Deno fixes
+import makeloc from 'https://deno.land/x/dirname@1.1.2/mod.ts'
+const { __dirname,  __filename } = makeloc(import.meta)
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../sequelize.js")[env];
+const env = Deno.env.get("NODE_ENV") || "development";
+import configs from "../sequelize.js";
+const config = configs[env];
 const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-	sequelize = new Sequelize(process.env[config.use_env_variable], config);
+	sequelize = new Sequelize(Deno.env.get(config.use_env_variable), config);
 } else {
 	//sequelize = new Sequelize(config.database, config.username, config.password, config);
 	sequelize = new Sequelize(config.url, config);
@@ -22,7 +28,7 @@ fs.readdirSync(__dirname)
 		return file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js";
 	})
 	.forEach(file => {
-		const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+		const model = import (path.join(__dirname, file)).then((mod) => mod.default(sequelize, Sequelize.DataTypes));
 		db[model.name] = model;
 	});
 
@@ -35,4 +41,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

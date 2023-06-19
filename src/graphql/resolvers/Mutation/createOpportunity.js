@@ -1,4 +1,4 @@
-import { ForbiddenError } from "../../index";
+import { ForbiddenError } from "../../index.js";
 
 export default async (
 	_,

@@ -1,9 +1,9 @@
 import { typeDefs as graphqlScalarDefs } from "graphql-scalars";
-import Query from "./Query";
-import Mutation from "./Mutation";
-import Opportunity from "./Opportunity";
-import Category from "./Category";
-import Eligibility from "./Eligibility";
-import User from "./User";
+import Query from "./Query.js";
+import Mutation from "./Mutation.js";
+import Opportunity from "./Opportunity.js";
+import Category from "./Category.js";
+import Eligibility from "./Eligibility.js";
+import User from "./User.js";
 
 export default [...graphqlScalarDefs, Query, Mutation, Opportunity, Category, Eligibility, User];

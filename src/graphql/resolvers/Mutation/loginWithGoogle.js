@@ -1,12 +1,13 @@
-import { AuthenticationError } from "../../index";
+import { AuthenticationError } from "../../index.js";
 
-import validateGoogleIDToken from "../../../utils/validateGoogleIDToken";
+import validateGoogleIDToken from "../../../utils/validateGoogleIDToken.js";
 
 import { sign } from "jsonwebtoken";
 
-import { PRIVATE_KEY, WHITELISTED_EMAIL_DOMAINS } from "../../../constants";
+import { PRIVATE_KEY, WHITELISTED_EMAIL_DOMAINS } from "../../../constants.js";
 
-const { users, oAuthIds } = require("../../../database");
+import db from "../../../database/index.js";
+const { users, oAuthIds } = db;  // Deno fixes
 
 const loginWithGoogle = async (_, { googleOAuthToken }, { setCookie }) => {
 	const payload = await validateGoogleIDToken(googleOAuthToken);

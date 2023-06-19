@@ -1,6 +1,6 @@
 "use strict";
-const { Model } = require("sequelize");
-module.exports = (sequelize, DataTypes) => {
+import { Model } from "sequelize";
+const oppTags = (sequelize, DataTypes) => {
 	class oppTags extends Model {
 		/**
 		 * Helper method for defining associations.
@@ -25,3 +25,5 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	return oppTags;
 };
+
+export default oppTags;

@@ -1,4 +1,4 @@
-import { ForbiddenError } from "../../index";
+import { ForbiddenError } from "../../index.js";
 
 export default async (_, { opportunityId, userId }, { models: { userOpps }, user, authenticationRequired }) => {
 	console.log("TESTING");

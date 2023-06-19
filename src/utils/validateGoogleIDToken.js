@@ -1,6 +1,7 @@
 import { OAuth2Client } from "google-auth-library";
-import { GOOGLE_LOGIN_CLIENT_ID } from "../constants";
+import { GOOGLE_LOGIN_CLIENT_ID } from "../constants.js";
 
+console.log(GOOGLE_LOGIN_CLIENT_ID);
 const client = new OAuth2Client(GOOGLE_LOGIN_CLIENT_ID);
 
 const validateGoogleIdToken = async idToken => {
@@ -11,6 +12,7 @@ const validateGoogleIdToken = async idToken => {
 		});
 		return ticket.getPayload();
 	} catch (e) {
+		console.log(e);
 		return null;
 	}
 };

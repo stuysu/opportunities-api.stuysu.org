@@ -1,16 +1,19 @@
 import express from "express";
 import cors from "cors";
-import { json } from "body-parser";
+// import { json } from "body-parser";
+// Deno fixes
+import BodyParser from "body-parser";
+const { json } = BodyParser;
 
-import { apolloServer, ForbiddenError } from "./graphql";
+import { apolloServer, ForbiddenError } from "./graphql/index.js";
 import { expressMiddleware } from "@apollo/server/express4";
 import { verify } from "jsonwebtoken";
-import { NODE_ENV, PUBLIC_KEY } from "./constants";
-import models from "./database";
+import { NODE_ENV, PUBLIC_KEY } from "./constants.js";
+import models from "./database/index.js";
 
-import archivePostDeadlineOpportunities from "./utils/archivePostDeadlineOpportunities";
+import archivePostDeadlineOpportunities from "./utils/archivePostDeadlineOpportunities.js";
 
-const schedule = require("node-schedule");
+import schedule from "node-schedule";
 
 const job = schedule.scheduleJob("5 * * * *", archivePostDeadlineOpportunities);
 
@@ -89,4 +92,4 @@ apolloServer.start().then(() =>
 	)
 );
 
-app.listen(process.env.PORT || 3001, () => console.log(`Listening on port ${process.env.PORT || 3001}`));
+app.listen(Deno.env.get("PORT") || 3001, () => console.log(`Listening on port ${Deno.env.PORT || 3001}`));

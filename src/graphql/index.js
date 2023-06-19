@@ -1,9 +1,9 @@
 import { createComplexityLimitRule } from "graphql-validation-complexity";
 import { ApolloServer } from "@apollo/server";
-import typeDefs from "./schema";
-import resolvers from "./resolvers";
+import typeDefs from "./schema/index.js";
+import resolvers from "./resolvers/index.js";
 import { ApolloServerErrorCode } from "@apollo/server/errors";
-import { GraphQLError } from "graphql/error";
+import { GraphQLError } from "graphql/error/index.js";
 
 // Apollo Server v3-style error classes for back-compat
 export class ApolloError extends GraphQLError {

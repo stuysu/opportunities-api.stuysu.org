@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "API for today.stuysu.org",
 	"main": "src/index.js",
+	"type": "module",
 	"scripts": {
 		"start": "node --require esm src/index.js",
 		"dev": "nodemon --require esm src/index.js",

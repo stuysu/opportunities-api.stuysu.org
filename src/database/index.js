@@ -1,1 +1,2 @@
-module.exports = require("./models");
+import db from "./models/index.js";
+export default db;

@@ -1,6 +1,6 @@
 "use strict";
-const { Model } = require("sequelize");
-module.exports = (sequelize, DataTypes) => {
+import { Model } from "sequelize";
+const oauthids = (sequelize, DataTypes) => {
 	class oAuthIds extends Model {
 		/**
 		 * Helper method for defining associations.
@@ -26,3 +26,5 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	return oAuthIds;
 };
+
+export default oauthids;

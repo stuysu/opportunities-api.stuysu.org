@@ -1,4 +1,4 @@
-import { ApolloError } from "../../index";
+import { ApolloError } from "../../index.js";
 
 export default async (
 	_,
