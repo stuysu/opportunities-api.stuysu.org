@@ -49,7 +49,7 @@ const loginWithGoogle = async (_, { googleOAuthToken }, { setCookie }) => {
 	if (!user) {
 		const isInSchool = WHITELISTED_EMAIL_DOMAINS.includes(payload.hd);
 		if (!isInSchool) {
-			throw new AuthenticationError("Email not associated with an account");
+			throw new AuthenticationError("Email not associated with an account. Please log in with a stuy.edu account.");
 		}
 		// if is in school, make new account
 		user = await users.create({
