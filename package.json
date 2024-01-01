@@ -24,7 +24,7 @@
 		"graphql": "^16.8.1",
 		"graphql-scalars": "^1.22.2",
 		"graphql-validation-complexity": "^0.4.2",
-		"jsonwebtoken": "^9.0.0",
+		"jsonwebtoken": "^9.0.2",
 		"moment-timezone": "^0.5.43",
 		"mysql2": "^3.6.5",
 		"node-schedule": "^2.1.1",
