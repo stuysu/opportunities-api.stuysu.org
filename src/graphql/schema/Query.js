@@ -8,7 +8,9 @@ export default `
 			categories: [Int],
 			eligibilities: [Int],
 			user: Int,
-			archived: Boolean
+			archived: Boolean,
+			offset: Int,
+			limit: Int
 		): [Opportunity]
 		categories: [Category]
 		eligibilities: [Eligibility]
