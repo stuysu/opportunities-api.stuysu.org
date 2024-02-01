@@ -1,7 +1,7 @@
 export default async (root, args, context) => {
-	// context.authenticationRequired();
+	context.authenticationRequired();
 
-	let { cost, categories, eligibilities, user, archived } = args;
+	let { cost, categories, eligibilities, user, archived, offset, limit } = args;
 	const { models } = context;
 	const { Op } = models.Sequelize;
 
@@ -67,6 +67,8 @@ export default async (root, args, context) => {
 	}
 	filterParams.include.push(userInclude);
 
-	//console.log(filterParams);
+	if (limit !== null && limit > 0) filterParams.limit = limit;
+	if (offset !== null) filterParams.offset = offset;
+
 	return await models.opportunities.findAll(filterParams);
 };
