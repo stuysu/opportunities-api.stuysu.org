@@ -29,7 +29,7 @@
 		"mysql2": "^3.6.5",
 		"node-schedule": "^2.1.1",
 		"sequelize": "^6.32.1",
-		"sequelize-cli": "6.6.1"
+		"sequelize-cli": "6.3.0"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.2",
