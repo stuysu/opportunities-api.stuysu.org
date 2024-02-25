@@ -14,8 +14,19 @@ module.exports = {
 		ssl: true,
 		native: true,
 		logging,
-		dialect: SEQUELIZE_URL.includes("sqlite") ? "sqlite" : "mysql"
+		dialect: "sqlite"
 	},
+	production: {
+		url: SEQUELIZE_URL,
+		define: {
+			charset: "utf8",
+			collate: "utf8mb4_unicode_ci"
+		},
+		ssl: true,
+		native: true,
+		logging,
+		dialect: "sqlite"
+	}/*,
 	production: {
 		url: SEQUELIZE_URL,
 		pool: {
@@ -32,5 +43,5 @@ module.exports = {
 		ssl: true,
 		logging,
 		dialect: "mysql"
-	}
+	}*/
 };
