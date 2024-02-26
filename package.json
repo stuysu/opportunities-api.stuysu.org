@@ -22,7 +22,7 @@
 		"express-session": "^1.17.3",
 		"google-auth-library": "^8.9.0",
 		"graphql": "^16.8.1",
-		"graphql-scalars": "^1.22.2",
+		"graphql-scalars": "^1.22.5",
 		"graphql-validation-complexity": "^0.4.2",
 		"jsonwebtoken": "^9.0.0",
 		"moment-timezone": "^0.5.43",
